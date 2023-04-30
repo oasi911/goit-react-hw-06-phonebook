@@ -1,13 +1,38 @@
-import PropTypes from 'prop-types';
-import { StyledForm } from './ContactForm.styler';
-import { AddBtn } from './ContactForm.styler';
-import { StyledLabel } from './ContactForm.styler';
-import { StyledInput } from './ContactForm.styler';
-import { Paragraph } from './ContactForm.styler';
+import {
+  StyledForm,
+  AddBtn,
+  StyledLabel,
+  StyledInput,
+  Paragraph,
+} from './ContactForm.styler';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectContacts } from 'redux/selectors';
+import { addContact } from 'redux/slice';
 
-export const ContactForm = ({ onSubmit }) => {
+export const ContactForm = () => {
+  const contacts = useSelector(selectContacts);
+  const dispatch = useDispatch();
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    const { name, number } = e.target.elements;
+    const contactName = name.value.trim();
+
+    if (
+      contacts.some(
+        contact => contact.name.toLowerCase() === contactName.toLowerCase()
+      )
+    ) {
+      return alert(`${contactName} is already in contacts.`);
+    }
+
+    dispatch(addContact({ name: contactName, number: number.value.trim() }));
+    e.target.reset();
+  };
+
   return (
-    <StyledForm onSubmit={onSubmit}>
+    <StyledForm onSubmit={handleSubmit}>
       <StyledLabel>
         <Paragraph>Name</Paragraph>
         <StyledInput
@@ -31,8 +56,4 @@ export const ContactForm = ({ onSubmit }) => {
       <AddBtn>Add Contact</AddBtn>
     </StyledForm>
   );
-};
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
