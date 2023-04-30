@@ -1,5 +1,5 @@
-import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
+import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { useSelector } from 'react-redux';
 import { selectContacts, selectFilter } from 'redux/selectors';
