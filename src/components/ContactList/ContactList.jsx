@@ -1,21 +1,12 @@
 import PropTypes from 'prop-types';
 import { ContactElement } from '../ContactElement/ContactElement';
 import { ElementsList } from './ContactList.styled';
+import { getFilteredContacts } from 'components/FilteredContacts';
 
 export const ContactList = ({ filter, contacts, onClickDeleteBtn }) => {
-  const getFilteredContacts = () => {
-    if (filter) {
-      const normalizedFilter = filter.toLowerCase();
-      return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(normalizedFilter)
-      );
-    }
-    return contacts;
-  };
-
   return (
     <ElementsList>
-      {getFilteredContacts().map(({ name, number, id }) => (
+      {getFilteredContacts(contacts, filter).map(({ name, number, id }) => (
         <ContactElement
           name={name}
           number={number}
