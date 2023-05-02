@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 import { ContactElement } from '../ContactElement/ContactElement';
 import { ElementsList } from './ContactList.styled';
-import { getFilteredContacts } from 'components/FilteredContacts';
 
-export const ContactList = ({ filter, contacts, onClickDeleteBtn }) => {
+export const ContactList = ({ contacts, onClickDeleteBtn }) => {
   return (
     <ElementsList>
-      {getFilteredContacts(contacts, filter).map(({ name, number, id }) => (
+      {contacts.map(({ name, number, id }) => (
         <ContactElement
           name={name}
           number={number}
@@ -21,6 +20,5 @@ export const ContactList = ({ filter, contacts, onClickDeleteBtn }) => {
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.shape()),
-  filter: PropTypes.arrayOf(PropTypes.shape()),
   onClickDeleteBtn: PropTypes.func,
 };
